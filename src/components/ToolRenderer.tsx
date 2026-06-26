@@ -18,6 +18,7 @@ const LegoLandscapeTool = lazy(() => import("@/tools/lego-landscape/LegoLandscap
 
 // Lazy load Material/Effect Tools
 const LiquidMetalTool = lazy(() => import("@/tools/liquid-metal/LiquidMetalTool"));
+const ToonShadingTool = lazy(() => import("@/tools/toon-shading/ToonShadingTool"));
 const DreamChromeTool = lazy(() => import("@/tools/dream-chrome/DreamChromeTool"));
 const PixelWorldTool = lazy(() => import("@/tools/pixel-world/PixelWorldTool"));
 const ColorFlowTool = lazy(() => import("@/tools/color-flow/ColorFlowTool"));
@@ -84,6 +85,7 @@ export default function ToolRenderer() {
           {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
           {activeMaterial === "dream-chrome" && <DreamChromeTool />}
           {activeMaterial === "pixel-world" && <PixelWorldTool />}
+          {activeMaterial === "toon-shading" && <ToonShadingTool />}
           {activeMaterial === "color-flow" && <ColorFlowTool />}
         </Suspense>
       </mesh>
