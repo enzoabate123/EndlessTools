@@ -12,7 +12,7 @@ export default function ToonShadingTool() {
 
   const { baseColor, outlineThickness, shadowSteps } = useControls("Toon Shading", {
     baseColor: { value: "#8aff33", label: "Base Color" },
-    outlineThickness: { value: 0.02, min: 0, max: 0.1, label: "Outline Thickness" },
+    outlineThickness: { value: 0.15, min: 0, max: 2.0, step: 0.01, label: "Outline Thickness" },
     shadowSteps: { value: 3, min: 2, max: 5, step: 1, label: "Shadow Steps" }
   }, { render: () => renderControls });
 
@@ -33,8 +33,9 @@ export default function ToonShadingTool() {
   }, [shadowSteps]);
 
   return (
-    <meshToonMaterial color={baseColor} gradientMap={gradientMap}>
+    <>
+      <meshToonMaterial color={baseColor} gradientMap={gradientMap} />
       <Outlines thickness={outlineThickness} color="black" />
-    </meshToonMaterial>
+    </>
   );
 }

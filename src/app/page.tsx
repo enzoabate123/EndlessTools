@@ -3,13 +3,14 @@
 import { Suspense, useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, Grid } from "@react-three/drei";
-import { Leva } from "leva";
+import { Leva, useControls } from "leva";
 import { Settings, Layers, Download, Video, Code } from "lucide-react";
 import ShareModal from "@/components/ShareModal";
 import { levaStore } from "leva";
 import ToolsSidebar from "@/components/ToolsSidebar";
 import ToolRenderer from "@/components/ToolRenderer";
 import { useToolStore } from "@/store/useToolStore";
+import { EffectComposer, DepthOfField } from "@react-three/postprocessing";
 
 export default function Home() {
   const { activeSidebarTab } = useToolStore();
@@ -163,7 +164,8 @@ export default function Home() {
           >
             <Suspense fallback={null}>
               <Environment preset="city" />
-              <SoftShadows size={25} samples={10} focus={0.5} />
+              {/* SoftShadows is incompatible with Three.js v0.185.0 shader chunks */}
+              {/* <SoftShadows size={25} samples={10} focus={0.5} /> */}
               <ambientLight intensity={0.5 / contrast} />
               <directionalLight
                 castShadow

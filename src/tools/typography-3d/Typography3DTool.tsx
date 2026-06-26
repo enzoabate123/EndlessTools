@@ -7,8 +7,16 @@ import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+import LiquidMetalTool from "../liquid-metal/LiquidMetalTool";
+import ToonShadingTool from "../toon-shading/ToonShadingTool";
+import DreamChromeTool from "../dream-chrome/DreamChromeTool";
+import PixelWorldTool from "../pixel-world/PixelWorldTool";
+import RetroMaterialTool from "../retro-futuristic/RetroMaterialTool";
+import ColorFlowTool from "../color-flow/ColorFlowTool";
+
 export default function Typography3DTool() {
   const activeSidebarTab = useToolStore(s => s.activeSidebarTab);
+  const activeMaterial = useToolStore(s => s.activeMaterial);
   const renderControls = activeSidebarTab === "typography-3d";
 
   const {
@@ -139,6 +147,13 @@ export default function Typography3DTool() {
               bevelSegments={5}
             >
               {char}
+              {activeMaterial === "default" && <meshStandardMaterial color="#ffffff" />}
+              {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
+              {activeMaterial === "dream-chrome" && <DreamChromeTool />}
+              {activeMaterial === "pixel-world" && <PixelWorldTool />}
+              {activeMaterial === "retro-futuristic" && <RetroMaterialTool />}
+              {activeMaterial === "toon-shading" && <ToonShadingTool />}
+              {activeMaterial === "color-flow" && <ColorFlowTool />}
             </Text3D>
         </group>
       ))}

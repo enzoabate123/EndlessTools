@@ -2,9 +2,7 @@
 import React from "react";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Sun } from "lucide-react";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Palette } from "lucide-react";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, LucideIcon } from "lucide-react";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Sun, Palette, type LucideIcon } from "lucide-react";
 
 const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
@@ -55,11 +53,6 @@ export default function ToolsSidebar() {
   const renderButton = (
     id: string, 
     name: string, 
-    Icon: React.ComponentType<{strokeWidth?: number, className?: string}>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Icon: any, 
-    Icon: React.ComponentType<{ strokeWidth?: number; className?: string }>,
-    Icon: React.ElementType,
     Icon: LucideIcon,
     isActive: boolean, 
     onClick: () => void
@@ -74,7 +67,6 @@ export default function ToolsSidebar() {
       }`}
       title={name}
     >
-      {/* @ts-expect-error - Lucide icons accept strokeWidth */}
       <Icon strokeWidth={isActive ? 2.5 : 2} className="w-5 h-5" />
     </button>
   );

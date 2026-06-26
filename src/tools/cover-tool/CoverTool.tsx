@@ -20,9 +20,9 @@ export default function CoverTool() {
   }, { render: () => renderControls });
 
   const bloomProps = useControls("Bloom Properties", {
-    intensity: { value: 1.5, min: 0, max: 10, step: 0.1 },
-    luminanceThreshold: { value: 0.9, min: 0, max: 1, step: 0.01 },
-    luminanceSmoothing: { value: 0.025, min: 0, max: 1, step: 0.001 },
+    intensity: { value: 5.0, min: 0, max: 50, step: 0.1 },
+    luminanceThreshold: { value: 0.15, min: 0, max: 1, step: 0.01 },
+    luminanceSmoothing: { value: 0.1, min: 0, max: 1, step: 0.001 },
   }, { render: () => renderControls && activeFilters.includes("bloom") });
 
   const halftoneProps = useControls("Halftone Properties", {

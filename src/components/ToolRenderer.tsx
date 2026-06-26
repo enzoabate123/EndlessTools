@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, lazy, useRef, useMemo } from "react";
+import { Suspense, lazy, useRef, useMemo, useLayoutEffect } from "react";
 import { useControls } from "leva";
 import { useEffect } from "react";
 import { Center } from "@react-three/drei";
@@ -29,7 +29,6 @@ const MotionTrailsTool = lazy(() => import("@/tools/motion-trails/MotionTrailsTo
 
 export default function ToolRenderer() {
   const { activeGeometry, baseGeometry, activeMaterial, activeSidebarTab } = useToolStore();
-  const { activeGeometry, activeMaterial } = useToolStore();
   const meshRef = useRef<THREE.Mesh>(null);
   const targetVector = useMemo(() => new THREE.Vector3(), []);
 
@@ -38,9 +37,28 @@ export default function ToolRenderer() {
     followMouse: { value: false },
   });
 
+  const defaultGeometry = useMemo(() => new THREE.BufferGeometry(), []);
+
   useEffect(() => {
     document.body.style.backgroundColor = backgroundColor;
   }, [backgroundColor]);
+
+  // Prevent R3F unmounting frame from leaving the mesh without a geometry
+  useLayoutEffect(() => {
+    if (meshRef.current) {
+      const mesh = meshRef.current;
+      let currentGeo = mesh.geometry || defaultGeometry;
+      Object.defineProperty(mesh, "geometry", {
+        get() {
+          return currentGeo || defaultGeometry;
+        },
+        set(val) {
+          currentGeo = val;
+        },
+        configurable: true,
+      });
+    }
+  }, [defaultGeometry]);
 
   // Handle some specific animations if liquid metal is active, since the material 
   // itself can't easily animate the mesh rotation in R3F without being a custom shader component.
@@ -81,23 +99,30 @@ export default function ToolRenderer() {
         </Suspense>
       )}
       <Center>
-      <mesh ref={meshRef}>
-    <Center>
       <mesh ref={meshRef} visible={activeGeometry !== "lego-landscape"}>
-        <Suspense fallback={<boxGeometry args={[1, 1, 1]} />}>
+        <Suspense fallback={
+          <>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="#ffffff" />
+          </>
+        }>
           {/* Render Base Geometry Always */}
           {baseGeometry === "shape-extrude" && <ShapeExtrudeTool />}
           {baseGeometry === "typography-3d" && <Typography3DTool />}
           {baseGeometry === "import-pipeline" && <ImportPipelineTool />}
           
           {/* Render Active Material for the base mesh */}
-          {activeMaterial === "default" && <meshStandardMaterial color="#ffffff" />}
-          {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
-          {activeMaterial === "dream-chrome" && <DreamChromeTool />}
-          {activeMaterial === "pixel-world" && <PixelWorldTool />}
-          {activeMaterial === "retro-futuristic" && <RetroMaterialTool />}
-          {activeMaterial === "toon-shading" && <ToonShadingTool />}
-          {activeMaterial === "color-flow" && <ColorFlowTool />}
+          {activeGeometry !== "typography-3d" && (
+            <>
+              {activeMaterial === "default" && <meshStandardMaterial color="#ffffff" />}
+              {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
+              {activeMaterial === "dream-chrome" && <DreamChromeTool />}
+              {activeMaterial === "pixel-world" && <PixelWorldTool />}
+              {activeMaterial === "retro-futuristic" && <RetroMaterialTool />}
+              {activeMaterial === "toon-shading" && <ToonShadingTool />}
+              {activeMaterial === "color-flow" && <ColorFlowTool />}
+            </>
+          )}
         </Suspense>
       </mesh>
 
