@@ -19,6 +19,7 @@ const materialTools = [
 
 const effectTools = [
   { id: "cover-tool", name: "Cover Filters", icon: Settings2 },
+  { id: "motion-trails", name: "Motion Trails", icon: Settings2 },
 ] as const;
 
 export default function ToolsSidebar() {
@@ -48,6 +49,7 @@ export default function ToolsSidebar() {
   const renderButton = (
     id: string, 
     name: string, 
+    Icon: React.ComponentType<{ strokeWidth?: number; className?: string }>,
     Icon: React.ElementType,
     Icon: LucideIcon,
     isActive: boolean, 
