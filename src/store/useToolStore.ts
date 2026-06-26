@@ -10,6 +10,7 @@ interface ToolState {
 
   // Scene Composition State
   activeGeometry: GeometryType;
+  baseGeometry: GeometryType;
   setActiveGeometry: (geo: GeometryType) => void;
 
   activeMaterial: MaterialType;
@@ -25,7 +26,14 @@ export const useToolStore = create<ToolState>((set) => ({
   setActiveSidebarTab: (tabId) => set({ activeSidebarTab: tabId }),
 
   activeGeometry: 'typography-3d', // Default geometry
-  setActiveGeometry: (geo) => set({ activeGeometry: geo }),
+  baseGeometry: 'typography-3d',
+  setActiveGeometry: (geo) => set((state) => {
+    if (geo === 'lego-landscape') {
+      return { activeGeometry: geo };
+    } else {
+      return { activeGeometry: geo, baseGeometry: geo };
+    }
+  }),
 
   activeMaterial: 'default', // Default material
   setActiveMaterial: (mat) => set({ activeMaterial: mat }),
