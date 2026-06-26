@@ -1,7 +1,7 @@
 "use client";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2 } from "lucide-react";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Palette } from "lucide-react";
 
 const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
@@ -15,6 +15,7 @@ const materialTools = [
   { id: "liquid-metal", name: "Liquid Metal", icon: Droplet },
   { id: "dream-chrome", name: "Dream Chrome", icon: Gem },
   { id: "pixel-world", name: "Pixel World", icon: Cuboid },
+  { id: "toon-shading", name: "Toon Shading", icon: Palette },
 ] as const;
 
 const effectTools = [
@@ -48,7 +49,7 @@ export default function ToolsSidebar() {
   const renderButton = (
     id: string, 
     name: string, 
-    Icon: any, 
+    Icon: React.ComponentType<{strokeWidth?: number, className?: string}>,
     isActive: boolean, 
     onClick: () => void
   ) => (
