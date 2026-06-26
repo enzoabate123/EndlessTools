@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow: hidden; /* Prevent scrolling, app is full screen */
+}
+
+/* Leva UI overrides to make it look a bit more like Endless Tools */
+#leva__root {
+  --leva-colors-elevation1: #1a1a1a !important;
+  --leva-colors-elevation2: #242424 !important;
+  --leva-colors-elevation3: #333 !important;
+  --leva-colors-accent1: #fff !important;
+  --leva-colors-accent2: #fff !important;
+  --leva-colors-accent3: #ccc !important;
+  --leva-colors-highlight1: #444 !important;
+  --leva-colors-highlight2: #555 !important;
+  --leva-colors-highlight3: #666 !important;
+  --leva-colors-folderWidgetColor: #888 !important;
+  --leva-colors-folderTextColor: #fff !important;
+  --leva-shadows-level1: 0 0 10px rgba(0,0,0,0.5) !important;
+  --leva-shadows-level2: 0 0 10px rgba(0,0,0,0.5) !important;
+  border-radius: 10px !important;
+}
