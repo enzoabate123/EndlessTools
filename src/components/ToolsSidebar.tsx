@@ -3,6 +3,7 @@ import React from "react";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
 import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Palette } from "lucide-react";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, LucideIcon } from "lucide-react";
 
 const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
@@ -52,6 +53,8 @@ export default function ToolsSidebar() {
     name: string, 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Icon: any, 
+    Icon: React.ElementType,
+    Icon: LucideIcon,
     isActive: boolean, 
     onClick: () => void
   ) => (
