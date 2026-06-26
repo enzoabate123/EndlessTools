@@ -7,6 +7,8 @@ import { Center } from "@react-three/drei";
 import { useToolStore } from "@/store/useToolStore";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { EffectComposer } from "@react-three/postprocessing";
+
 
 // Lazy load Geometry Tools
 const ShapeExtrudeTool = lazy(() => import("@/tools/shape-extrude/ShapeExtrudeTool"));
@@ -89,6 +91,11 @@ export default function ToolRenderer() {
          <CoverTool />
          <MotionTrailsTool meshRef={meshRef} />
       </Suspense>
+      <EffectComposer>
+        <Suspense fallback={null}>
+           <CoverTool />
+        </Suspense>
+      </EffectComposer>
     </Center>
   );
 }
