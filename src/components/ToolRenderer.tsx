@@ -24,6 +24,7 @@ const CoverTool = lazy(() => import("@/tools/cover-tool/CoverTool"));
 const MotionTrailsTool = lazy(() => import("@/tools/motion-trails/MotionTrailsTool"));
 
 export default function ToolRenderer() {
+  const { activeGeometry, baseGeometry, activeMaterial, activeSidebarTab } = useToolStore();
   const { activeGeometry, activeMaterial } = useToolStore();
   const meshRef = useRef<THREE.Mesh>(null);
   const targetVector = useMemo(() => new THREE.Vector3(), []);
@@ -70,21 +71,32 @@ export default function ToolRenderer() {
 
   return (
     <Center>
-      <mesh ref={meshRef}>
+      <mesh ref={meshRef} visible={activeGeometry !== "lego-landscape"}>
         <Suspense fallback={<boxGeometry args={[1, 1, 1]} />}>
-          {/* Render Active Geometry */}
-          {activeGeometry === "shape-extrude" && <ShapeExtrudeTool />}
-          {activeGeometry === "typography-3d" && <Typography3DTool />}
-          {activeGeometry === "import-pipeline" && <ImportPipelineTool />}
-          {activeGeometry === "lego-landscape" && <LegoLandscapeTool />}
+          {/* Render Base Geometry Always */}
+          {baseGeometry === "shape-extrude" && <ShapeExtrudeTool />}
+          {baseGeometry === "typography-3d" && <Typography3DTool />}
+          {baseGeometry === "import-pipeline" && <ImportPipelineTool />}
           
-          {/* Render Active Material */}
+          {/* Render Active Material for the base mesh */}
           {activeMaterial === "default" && <meshStandardMaterial color="#ffffff" />}
           {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
           {activeMaterial === "dream-chrome" && <DreamChromeTool />}
           {activeMaterial === "pixel-world" && <PixelWorldTool />}
         </Suspense>
       </mesh>
+
+      {/* Render Lego Landscape Conditionally as a separate entity */}
+      {activeGeometry === "lego-landscape" && (
+        <Suspense fallback={null}>
+          <LegoLandscapeTool baseMeshRef={meshRef}>
+            {activeMaterial === "default" && <meshStandardMaterial color="#ffffff" />}
+            {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
+            {activeMaterial === "dream-chrome" && <DreamChromeTool />}
+            {activeMaterial === "pixel-world" && <PixelWorldTool />}
+          </LegoLandscapeTool>
+        </Suspense>
+      )}
       
       {/* Post Processing Render (Cover Tool doesn't render inside the mesh) */}
       <Suspense fallback={null}>
