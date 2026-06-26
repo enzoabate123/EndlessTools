@@ -7,6 +7,8 @@ import { Center } from "@react-three/drei";
 import { useToolStore } from "@/store/useToolStore";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { EffectComposer } from "@react-three/postprocessing";
+
 
 // Lazy load Geometry Tools
 const ShapeExtrudeTool = lazy(() => import("@/tools/shape-extrude/ShapeExtrudeTool"));
@@ -72,9 +74,11 @@ export default function ToolRenderer() {
       </mesh>
       
       {/* Post Processing Render (Cover Tool doesn't render inside the mesh) */}
-      <Suspense fallback={null}>
-         <CoverTool />
-      </Suspense>
+      <EffectComposer>
+        <Suspense fallback={null}>
+           <CoverTool />
+        </Suspense>
+      </EffectComposer>
     </Center>
     </group>
   );
