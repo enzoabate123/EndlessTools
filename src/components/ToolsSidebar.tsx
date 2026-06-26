@@ -1,7 +1,7 @@
 "use client";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2 } from "lucide-react";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Sun } from "lucide-react";
 
 const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
@@ -15,6 +15,7 @@ const materialTools = [
   { id: "liquid-metal", name: "Liquid Metal", icon: Droplet },
   { id: "dream-chrome", name: "Dream Chrome", icon: Gem },
   { id: "pixel-world", name: "Pixel World", icon: Cuboid },
+  { id: "retro-futuristic", name: "Retro Futuristic", icon: Sun },
 ] as const;
 
 const effectTools = [
@@ -48,7 +49,7 @@ export default function ToolsSidebar() {
   const renderButton = (
     id: string, 
     name: string, 
-    Icon: any, 
+    Icon: React.ElementType,
     isActive: boolean, 
     onClick: () => void
   ) => (
@@ -62,6 +63,7 @@ export default function ToolsSidebar() {
       }`}
       title={name}
     >
+      {/* @ts-expect-error - Lucide icons accept strokeWidth */}
       <Icon strokeWidth={isActive ? 2.5 : 2} className="w-5 h-5" />
     </button>
   );
