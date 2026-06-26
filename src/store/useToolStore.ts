@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export type GeometryType = 'shape-extrude' | 'typography-3d' | 'import-pipeline' | 'lego-landscape' | null;
+export type MaterialType = 'default' | 'liquid-metal' | 'dream-chrome' | 'pixel-world' | 'retro-futuristic';
 export type MaterialType = 'default' | 'liquid-metal' | 'dream-chrome' | 'pixel-world' | 'toon-shading' | 'color-flow';
 
 interface ToolState {

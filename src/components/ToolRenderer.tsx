@@ -21,6 +21,8 @@ const LiquidMetalTool = lazy(() => import("@/tools/liquid-metal/LiquidMetalTool"
 const ToonShadingTool = lazy(() => import("@/tools/toon-shading/ToonShadingTool"));
 const DreamChromeTool = lazy(() => import("@/tools/dream-chrome/DreamChromeTool"));
 const PixelWorldTool = lazy(() => import("@/tools/pixel-world/PixelWorldTool"));
+const RetroMaterialTool = lazy(() => import("@/tools/retro-futuristic/RetroMaterialTool"));
+const RetroEnvironment = lazy(() => import("@/tools/retro-futuristic/RetroEnvironment"));
 const ColorFlowTool = lazy(() => import("@/tools/color-flow/ColorFlowTool"));
 const CoverTool = lazy(() => import("@/tools/cover-tool/CoverTool"));
 const MotionTrailsTool = lazy(() => import("@/tools/motion-trails/MotionTrailsTool"));
@@ -72,6 +74,14 @@ export default function ToolRenderer() {
   });
 
   return (
+    <group>
+      {activeMaterial === "retro-futuristic" && (
+        <Suspense fallback={null}>
+          <RetroEnvironment />
+        </Suspense>
+      )}
+      <Center>
+      <mesh ref={meshRef}>
     <Center>
       <mesh ref={meshRef} visible={activeGeometry !== "lego-landscape"}>
         <Suspense fallback={<boxGeometry args={[1, 1, 1]} />}>
@@ -85,6 +95,7 @@ export default function ToolRenderer() {
           {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
           {activeMaterial === "dream-chrome" && <DreamChromeTool />}
           {activeMaterial === "pixel-world" && <PixelWorldTool />}
+          {activeMaterial === "retro-futuristic" && <RetroMaterialTool />}
           {activeMaterial === "toon-shading" && <ToonShadingTool />}
           {activeMaterial === "color-flow" && <ColorFlowTool />}
         </Suspense>
@@ -113,5 +124,6 @@ export default function ToolRenderer() {
         </Suspense>
       </EffectComposer>
     </Center>
+    </group>
   );
 }

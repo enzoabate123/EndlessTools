@@ -2,6 +2,7 @@
 import React from "react";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Sun } from "lucide-react";
 import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Palette } from "lucide-react";
 import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, LucideIcon } from "lucide-react";
 
@@ -17,6 +18,7 @@ const materialTools = [
   { id: "liquid-metal", name: "Liquid Metal", icon: Droplet },
   { id: "dream-chrome", name: "Dream Chrome", icon: Gem },
   { id: "pixel-world", name: "Pixel World", icon: Cuboid },
+  { id: "retro-futuristic", name: "Retro Futuristic", icon: Sun },
   { id: "toon-shading", name: "Toon Shading", icon: Palette },
   { id: "color-flow", name: "Color Flow", icon: Palette },
 ] as const;
@@ -72,6 +74,7 @@ export default function ToolsSidebar() {
       }`}
       title={name}
     >
+      {/* @ts-expect-error - Lucide icons accept strokeWidth */}
       <Icon strokeWidth={isActive ? 2.5 : 2} className="w-5 h-5" />
     </button>
   );
