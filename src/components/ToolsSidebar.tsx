@@ -48,6 +48,7 @@ export default function ToolsSidebar() {
   const renderButton = (
     id: string, 
     name: string, 
+    Icon: React.ElementType,
     Icon: LucideIcon,
     isActive: boolean, 
     onClick: () => void
