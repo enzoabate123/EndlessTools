@@ -1,7 +1,7 @@
 "use client";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, LucideIcon } from "lucide-react";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2 } from "lucide-react";
 
 const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
@@ -19,7 +19,6 @@ const materialTools = [
 
 const effectTools = [
   { id: "cover-tool", name: "Cover Filters", icon: Settings2 },
-  { id: "motion-trails", name: "Motion Trails", icon: Settings2 },
 ] as const;
 
 export default function ToolsSidebar() {
@@ -50,8 +49,6 @@ export default function ToolsSidebar() {
     id: string, 
     name: string, 
     Icon: React.ComponentType<{ strokeWidth?: number; className?: string }>,
-    Icon: React.ElementType,
-    Icon: LucideIcon,
     isActive: boolean, 
     onClick: () => void
   ) => (
