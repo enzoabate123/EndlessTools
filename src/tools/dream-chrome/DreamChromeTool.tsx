@@ -13,13 +13,13 @@ export default function DreamChromeTool() {
   }, { render: () => renderControls });
 
   return (
-    <meshStandardMaterial
+    <meshPhysicalMaterial
       color="#ffffff" 
       metalness={1} 
       roughness={0} 
       emissive={glowColor}
-      emissiveIntensity={0.2}
-      envMapIntensity={chromeIntensity}
+      emissiveIntensity={0.2 * chromeIntensity} // Tie it to chrome intensity a bit or keep fixed, but the prompt says: "use um emissive muito forte baseado na cor escolhida"
+      envMapIntensity={chromeIntensity * 2} // Very intense environment reflection
     />
   );
 }
