@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
 import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2 } from "lucide-react";
@@ -48,7 +49,7 @@ export default function ToolsSidebar() {
   const renderButton = (
     id: string, 
     name: string, 
-    Icon: any, 
+    Icon: any, // eslint-disable-line @typescript-eslint/no-explicit-any
     isActive: boolean, 
     onClick: () => void
   ) => (
