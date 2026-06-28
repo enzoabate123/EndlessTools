@@ -2,8 +2,7 @@
 import React from "react";
 
 import { useToolStore, GeometryType, MaterialType } from "@/store/useToolStore";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, Palette } from "lucide-react";
-import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2, LucideIcon } from "lucide-react";
+import { Box, Type, Import, Settings2, Droplet, Grid3x3, Gem, Cuboid, MousePointer2 } from "lucide-react";
 
 const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
@@ -17,12 +16,10 @@ const materialTools = [
   { id: "liquid-metal", name: "Liquid Metal", icon: Droplet },
   { id: "dream-chrome", name: "Dream Chrome", icon: Gem },
   { id: "pixel-world", name: "Pixel World", icon: Cuboid },
-  { id: "color-flow", name: "Color Flow", icon: Palette },
 ] as const;
 
 const effectTools = [
   { id: "cover-tool", name: "Cover Filters", icon: Settings2 },
-  { id: "motion-trails", name: "Motion Trails", icon: Settings2 },
 ] as const;
 
 export default function ToolsSidebar() {
@@ -54,9 +51,6 @@ export default function ToolsSidebar() {
     name: string, 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Icon: any, 
-    Icon: React.ComponentType<{ strokeWidth?: number; className?: string }>,
-    Icon: React.ElementType,
-    Icon: LucideIcon,
     isActive: boolean, 
     onClick: () => void
   ) => (
