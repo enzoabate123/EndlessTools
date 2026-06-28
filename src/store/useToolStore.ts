@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export type GeometryType = 'shape-extrude' | 'typography-3d' | 'import-pipeline' | 'lego-landscape' | null;
-export type MaterialType = 'default' | 'liquid-metal' | 'dream-chrome' | 'pixel-world' | 'toon-shading' | 'color-flow';
+export type MaterialType = 'default' | 'liquid-metal' | 'dream-chrome' | 'pixel-world' | 'toon-shading';
 
 interface ToolState {
   // What the user is currently editing in the sidebar
@@ -10,7 +10,6 @@ interface ToolState {
 
   // Scene Composition State
   activeGeometry: GeometryType;
-  baseGeometry: GeometryType;
   setActiveGeometry: (geo: GeometryType) => void;
 
   activeMaterial: MaterialType;
@@ -26,14 +25,7 @@ export const useToolStore = create<ToolState>((set) => ({
   setActiveSidebarTab: (tabId) => set({ activeSidebarTab: tabId }),
 
   activeGeometry: 'typography-3d', // Default geometry
-  baseGeometry: 'typography-3d',
-  setActiveGeometry: (geo) => set((state) => {
-    if (geo === 'lego-landscape') {
-      return { activeGeometry: geo };
-    } else {
-      return { activeGeometry: geo, baseGeometry: geo };
-    }
-  }),
+  setActiveGeometry: (geo) => set({ activeGeometry: geo }),
 
   activeMaterial: 'default', // Default material
   setActiveMaterial: (mat) => set({ activeMaterial: mat }),
