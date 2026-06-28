@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type GeometryType = 'shape-extrude' | 'typography-3d' | 'import-pipeline' | 'lego-landscape' | null;
+export type GeometryType = 'shape-extrude' | 'typography-3d' | 'import-pipeline' | null;
 export type MaterialType = 'default' | 'liquid-metal' | 'dream-chrome' | 'pixel-world' | 'retro-futuristic' | 'toon-shading' | 'color-flow';
 
 interface ToolState {
@@ -10,8 +10,10 @@ interface ToolState {
 
   // Scene Composition State
   activeGeometry: GeometryType;
-  baseGeometry: GeometryType;
   setActiveGeometry: (geo: GeometryType) => void;
+
+  isVoxelized: boolean;
+  toggleVoxelization: () => void;
 
   activeMaterial: MaterialType;
   setActiveMaterial: (mat: MaterialType) => void;
@@ -26,14 +28,10 @@ export const useToolStore = create<ToolState>((set) => ({
   setActiveSidebarTab: (tabId) => set({ activeSidebarTab: tabId }),
 
   activeGeometry: 'typography-3d', // Default geometry
-  baseGeometry: 'typography-3d',
-  setActiveGeometry: (geo) => set((state) => {
-    if (geo === 'lego-landscape') {
-      return { activeGeometry: geo };
-    } else {
-      return { activeGeometry: geo, baseGeometry: geo };
-    }
-  }),
+  setActiveGeometry: (geo) => set({ activeGeometry: geo }),
+
+  isVoxelized: false,
+  toggleVoxelization: () => set((state) => ({ isVoxelized: !state.isVoxelized })),
 
   activeMaterial: 'default', // Default material
   setActiveMaterial: (mat) => set({ activeMaterial: mat }),

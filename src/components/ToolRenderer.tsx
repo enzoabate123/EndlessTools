@@ -28,7 +28,7 @@ const CoverTool = lazy(() => import("@/tools/cover-tool/CoverTool"));
 const MotionTrailsTool = lazy(() => import("@/tools/motion-trails/MotionTrailsTool"));
 
 export default function ToolRenderer() {
-  const { activeGeometry, baseGeometry, activeMaterial, activeSidebarTab } = useToolStore();
+  const { activeGeometry, activeMaterial, isVoxelized } = useToolStore();
   const meshRef = useRef<THREE.Mesh>(null);
   const targetVector = useMemo(() => new THREE.Vector3(), []);
 
@@ -99,7 +99,7 @@ export default function ToolRenderer() {
         </Suspense>
       )}
       <Center>
-      <mesh ref={meshRef} visible={activeGeometry !== "lego-landscape"}>
+      <mesh ref={meshRef} visible={!isVoxelized}>
         <Suspense fallback={
           <>
             <boxGeometry args={[1, 1, 1]} />
@@ -107,9 +107,9 @@ export default function ToolRenderer() {
           </>
         }>
           {/* Render Base Geometry Always */}
-          {baseGeometry === "shape-extrude" && <ShapeExtrudeTool />}
-          {baseGeometry === "typography-3d" && <Typography3DTool />}
-          {baseGeometry === "import-pipeline" && <ImportPipelineTool />}
+          {activeGeometry === "shape-extrude" && <ShapeExtrudeTool />}
+          {activeGeometry === "typography-3d" && <Typography3DTool />}
+          {activeGeometry === "import-pipeline" && <ImportPipelineTool />}
           
           {/* Render Active Material for the base mesh */}
           {activeGeometry !== "typography-3d" && (
@@ -127,13 +127,16 @@ export default function ToolRenderer() {
       </mesh>
 
       {/* Render Lego Landscape Conditionally as a separate entity */}
-      {activeGeometry === "lego-landscape" && (
+      {isVoxelized && (
         <Suspense fallback={null}>
           <LegoLandscapeTool baseMeshRef={meshRef}>
             {activeMaterial === "default" && <meshStandardMaterial color="#ffffff" />}
             {activeMaterial === "liquid-metal" && <LiquidMetalTool />}
             {activeMaterial === "dream-chrome" && <DreamChromeTool />}
             {activeMaterial === "pixel-world" && <PixelWorldTool />}
+            {activeMaterial === "retro-futuristic" && <RetroMaterialTool />}
+            {activeMaterial === "toon-shading" && <ToonShadingTool />}
+            {activeMaterial === "color-flow" && <ColorFlowTool />}
           </LegoLandscapeTool>
         </Suspense>
       )}

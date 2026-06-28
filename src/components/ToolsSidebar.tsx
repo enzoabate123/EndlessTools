@@ -8,7 +8,6 @@ const geometryTools = [
   { id: "shape-extrude", name: "3D Extrude", icon: Box },
   { id: "typography-3d", name: "Typography", icon: Type },
   { id: "import-pipeline", name: "Import Mesh", icon: Import },
-  { id: "lego-landscape", name: "Lego Landscape", icon: Grid3x3 },
 ] as const;
 
 const materialTools = [
@@ -22,6 +21,7 @@ const materialTools = [
 ] as const;
 
 const effectTools = [
+  { id: "lego-landscape", name: "Lego Voxelizer", icon: Grid3x3 },
   { id: "cover-tool", name: "Cover Filters", icon: Settings2 },
   { id: "motion-trails", name: "Motion Trails", icon: Settings2 },
 ] as const;
@@ -33,7 +33,9 @@ export default function ToolsSidebar() {
     activeGeometry, 
     setActiveGeometry,
     activeMaterial,
-    setActiveMaterial
+    setActiveMaterial,
+    isVoxelized,
+    toggleVoxelization
   } = useToolStore();
 
   const handleGeometryClick = (id: GeometryType) => {
@@ -47,6 +49,9 @@ export default function ToolsSidebar() {
   };
 
   const handleEffectClick = (id: string) => {
+    if (id === "lego-landscape") {
+      toggleVoxelization();
+    }
     setActiveSidebarTab(id);
   };
 
@@ -117,7 +122,7 @@ export default function ToolsSidebar() {
             tool.id, 
             tool.name, 
             tool.icon, 
-            activeSidebarTab === tool.id, 
+            (tool.id === "lego-landscape" ? isVoxelized : activeSidebarTab === tool.id),
             () => handleEffectClick(tool.id)
           )
         )}

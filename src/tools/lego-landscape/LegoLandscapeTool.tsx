@@ -23,7 +23,7 @@ interface LegoLandscapeToolProps {
 }
 
 export default function LegoLandscapeTool({ baseMeshRef, children }: LegoLandscapeToolProps) {
-  const activeSidebarTab = useToolStore((s) => s.activeSidebarTab);
+  const { activeSidebarTab } = useToolStore();
   const renderControls = activeSidebarTab === "lego-landscape";
   const instancedMeshRef = useRef<THREE.InstancedMesh>(null);
   const [positions, setPositions] = useState<THREE.Vector3[]>([]);
@@ -80,19 +80,14 @@ export default function LegoLandscapeTool({ baseMeshRef, children }: LegoLandsca
     const validPositions: THREE.Vector3[] = [];
     const raycaster = new THREE.Raycaster();
     // A point outside the bounding box to shoot rays from
-    const outPoint = new THREE.Vector3(
-      boundingBox.max.x + 10,
-      boundingBox.max.y + 10,
-      boundingBox.max.z + 10
-    );
 
-    const dir = new THREE.Vector3();
+    const dir = new THREE.Vector3(1, 0, 0); // Raycast along X axis
 
     for (let x = boundingBox.min.x; x <= boundingBox.max.x; x += blockSize) {
       for (let y = boundingBox.min.y; y <= boundingBox.max.y; y += blockSize) {
         for (let z = boundingBox.min.z; z <= boundingBox.max.z; z += blockSize) {
-          const point = new THREE.Vector3(x, y, z);
-          dir.subVectors(outPoint, point).normalize();
+          // Add a small offset to avoid perfectly hitting edges
+          const point = new THREE.Vector3(x + 0.001, y + 0.001, z + 0.001);
           raycaster.set(point, dir);
 
           const intersects = raycaster.intersectObject(testMesh);
